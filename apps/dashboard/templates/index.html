@@ -1,0 +1,30 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>kuptelefonik</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="preconnect" href="https://fonts.gstatic.com"> 
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <section id="sidebar">
+        <img class="logo" src="{% static 'icons/logo.svg' %}" alt="logo">
+        <div id="sidebar-menu">
+            <a href="#search" class="sidebar-menu-link">
+                <img src="{% static 'icons/search.svg' %}" alt="search-icon" class="sidebar-icon">
+                <span>Szukaj</span>
+            </a>
+            <a href="#observed" class="sidebar-menu-link">
+                <img src="{% static 'icons/favourite.svg' %}" alt="favourite-icon" class="sidebar-icon">
+                <span>Obserwowane</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

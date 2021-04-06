@@ -1,0 +1,48 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    height: 5000px;
+}
+
+#sidebar {
+    background-color: #171F58;
+    width: 270px;
+    height: 100%;
+    position: fixed;
+}
+
+img.logo {
+    width: 215px;
+    height: 37px;
+    left: 28px;
+    top: 39px;
+    position: fixed;
+}
+
+#sidebar-menu {
+    top: 120px;
+    position: relative;
+}
+
+
+a.sidebar-menu-link {
+    display: flex;
+    color: white;
+    padding: 12px 0 12px 49px;
+    text-decoration: none;
+    margin-bottom: 0px;
+}
+
+a.sidebar-menu-link:hover {
+    background-color:#2865D8;
+}
+
+.sidebar-icon {
+    width: 17px;
+    height: 17px;
+    margin-right: 26px;
+}
