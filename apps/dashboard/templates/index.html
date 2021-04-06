@@ -16,15 +16,20 @@
     <section id="sidebar">
         <img class="logo" src="{% static 'icons/logo.svg' %}" alt="logo">
         <div id="sidebar-menu">
-            <a href="#search" class="sidebar-menu-link">
+            <a href="/dashboard/search" class="sidebar-menu-link">
                 <img src="{% static 'icons/search.svg' %}" alt="search-icon" class="sidebar-icon">
                 <span>Szukaj</span>
             </a>
-            <a href="#observed" class="sidebar-menu-link">
+            <a href="/dashboard/observed" class="sidebar-menu-link">
                 <img src="{% static 'icons/favourite.svg' %}" alt="favourite-icon" class="sidebar-icon">
                 <span>Obserwowane</span>
             </a>
         </div>
-    </div>
+    </section>
+
+    <section id="main-content">
+        {% block content %}
+        {% endblock %}
+    </section>
 </body>
 </html>

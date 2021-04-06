@@ -46,3 +46,13 @@ a.sidebar-menu-link:hover {
     height: 17px;
     margin-right: 26px;
 }
+
+#main-content {
+    background-color: #F8F9FA;
+    height: 100%;
+    margin-left: 270px;
+}
+
+.page-heading {
+    font-size: 34px;
+}
