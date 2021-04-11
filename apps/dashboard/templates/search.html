@@ -4,8 +4,10 @@
 {% block content %}
     <h1 class="page-heading">Wyszukiwanie telefonu</h1>
     <form class="search-bar" action='/dashboard/search' method="get">
-        <!-- <img src="{% static 'icons/search.svg' %}" alt="search-icon"> -->
-        <input class="search-text-field" type="text" name="query" placeholder="Wpisz szukany model telefonu (np. iPhone 12)">
+        <div class="search-text-field">
+            <img src="{% static 'icons/search-gray.svg' %}" alt="search-icon">
+            <input type="text" name="query" placeholder="Wpisz szukany model telefonu (np. iPhone 12)">
+        </div>
         <button class="search-button" type="submit">Szukaj</button>
     </form>
     {% if query %}
