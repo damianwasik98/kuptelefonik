@@ -1,5 +1,14 @@
 {% extends 'index.html' %}
+{% load static %}
 
 {% block content %}
-<h1 class="page-heading">Szukaj</h1>
+    <h1 class="page-heading">Wyszukiwanie telefonu</h1>
+    <form class="search-bar" action='/dashboard/search' method="get">
+        <!-- <img src="{% static 'icons/search.svg' %}" alt="search-icon"> -->
+        <input class="search-text-field" type="text" name="query" placeholder="Wpisz szukany model telefonu (np. iPhone 12)">
+        <button class="search-button" type="submit">Szukaj</button>
+    </form>
+    {% if query %}
+        <p>Wyniki wyszukiwania dla zapytania: {{ query }}</p>
+    {% endif %}
 {% endblock %}

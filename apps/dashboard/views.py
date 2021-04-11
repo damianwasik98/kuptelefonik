@@ -6,7 +6,8 @@ def index(request):
     return render(request, 'index.html')
 
 def search(request):
-    return render(request, 'search.html')
+    query = request.GET.get('query')
+    return render(request, 'search.html', {'query': query})
 
 def observed(request):
     return render(request, 'observed.html')
