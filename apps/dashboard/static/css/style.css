@@ -202,3 +202,81 @@ div.result-info {
 .phone-observe-button-container img {
     margin-right: 9px;
 }
+
+div.observed-item {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+div.price-chart {
+    margin-left: 20px;
+    background-color: white;
+    width: 100%;
+    box-shadow: 0px 3px 6px #00000029;
+    opacity: 1;
+}
+
+.price-chart-header {
+    font-size: 14px;
+    font-weight: bold;
+    padding-left: 34px;
+    padding-top: 18px;
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.current-price {
+    margin-left: 26px;
+}
+
+.old-price {
+    text-decoration: line-through;
+    /* text-decoration-thickness: 2px; */
+    margin-left: 8px;
+}
+
+.notification {
+    margin-left: 26px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.higher-price {
+    color: #CB0E0E;
+}
+
+.lower-price {
+    color: #0FC680;
+}
+
+.price-changed-icon {
+    size: 14px;
+    margin-left: 9px;
+}
+
+.all-offers-button {
+    background-color: #2865D8;
+    color: white;
+    font-size: 14px;
+    border: 0px;
+    padding: 5px 0 5px 12px;
+    width: 170px;
+    height: 30px;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    right: 10px;
+}
+
+.all-offers-button-icon {
+    margin: 13px;
+    width: 7px;
+    height: 12px;
+}
+
+.notification-switch {
+    margin-right: 7px;
+}

@@ -1,0 +1,4 @@
+<svg id="Component_25_5" data-name="Component 25 – 5" xmlns="http://www.w3.org/2000/svg" width="16" height="10" viewBox="0 0 16 10">
+  <path id="toggle-off" d="M11,4a4,4,0,0,1,0,8H8A5,5,0,0,0,8,4ZM5,12A4,4,0,1,1,9,8,4,4,0,0,1,5,12ZM0,8a5,5,0,0,0,5,5h6A5,5,0,1,0,11,3H5A5,5,0,0,0,0,8Z" transform="translate(0 -3)" fill="#2865d8"/>
+  <path id="toggle-on" d="M5,3A5,5,0,0,0,5,13h6A5,5,0,1,0,11,3Zm6,9a4,4,0,1,1,4-4A4,4,0,0,1,11,12Z" transform="translate(0 -3)" fill="#2865d8" opacity="0"/>
+</svg>
