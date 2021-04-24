@@ -276,3 +276,7 @@ div.price-chart {
     width: 7px;
     height: 12px;
 }
+
+.notification-switch {
+    margin-right: 7px;
+}
