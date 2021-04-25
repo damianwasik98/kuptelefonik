@@ -37,9 +37,9 @@
                 <img src="{% static 'icons/all-offers-button.svg' %}" alt="all-offers-button" class="all-offers-button-icon">
             </button>
         </section>
-        <section class="chart-area">
-
-        </section>
+        <div class="chart-container">
+            <canvas id="phone-price-chart"></canvas>
+        </div>
     </div>
 </div>
 
@@ -78,10 +78,31 @@
             </button>
         </section>
         <section class="chart-area">
-
         </section>
     </div>
 </div>
+
+
+<script>
+    var ctx = document.getElementById('phone-price-chart');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            datasets: [{
+                data: [12, 19, 3, 5, 2, 3],
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
 
 
 {% endblock %}
