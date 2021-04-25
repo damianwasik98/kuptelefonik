@@ -20,6 +20,23 @@ class PhonePriceChartData(APIView):
 
     def get(self, request, format=None):
         chart_data = {
-            'prices': ['3449.49', '3134.45'] 
+            'prices': [
+                "4449.99",
+                "4149.99",
+                "4449.99",
+                "4449.99",
+                "4449.99",
+                "4449.99",
+                "4249.99",
+            ],
+            'dates': [
+                '5 miesięcy temu',
+                '4 miesiące temu',
+                '3 miesiące temu',
+                '2 miesiące temu',
+                '1 miesiąc temu',
+                '14 dni temu',
+                '2 dni temu'
+            ]
         }
         return JsonResponse(chart_data)

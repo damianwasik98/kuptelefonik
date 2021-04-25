@@ -84,56 +84,54 @@
 
 
 <script>
+    var endpoint = '/dashboard/api/price_chart_data'
 
-    var dates = [
-        '5 miesięcy temu',
-        '4 miesiące temu',
-        '3 miesiące temu',
-        '2 miesiące temu',
-        '1 miesiąc temu',
-        '14 dni temu',
-        '2 dni temu'
-    ]
+    $.ajax({
+        method: "GET",
+        url: endpoint,
+        success: function(response){
+            console.log("ajax success")
+            console.log(response)
 
-    var prices = [
-        "4449.99",
-        "4149.99",
-        "4449.99",
-        "4449.99",
-        "4449.99",
-        "4449.99",
-        "4249.99",
-    ]
+            var dates = response.dates
+            var prices = response.prices
 
-    Chart.defaults.font.size = 12;
-    Chart.defaults.font.color = '#605D5D';
-    Chart.defaults.font.family = 'Montserrat';
+            Chart.defaults.font.size = 12;
+            Chart.defaults.font.color = '#605D5D';
+            Chart.defaults.font.family = 'Montserrat';
 
-    Chart.overrides.line.backgroundColor = '#2865D8';
-    Chart.overrides.line.borderColor = '#2865D8';
-    Chart.overrides.line.tension = 0.5;
+            Chart.overrides.line.backgroundColor = '#2865D8';
+            Chart.overrides.line.borderColor = '#2865D8';
+            Chart.overrides.line.tension = 0.5;
 
-    var ctx = document.getElementById('phone-price-chart');
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: dates,
-            datasets: [{
-                data: prices
-            }]
-        },
-        options: {
-            maintainAspectRatio: false,
-            layout: {
-                padding: 5
-            },
-            plugins: {
-                legend: {
-                    display: false
+            var ctx = document.getElementById('phone-price-chart');
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: dates,
+                    datasets: [{
+                        data: prices
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    layout: {
+                        padding: 5
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
                 }
-            },
+            });
+
+        },
+        error: function(response){
+            console.log("ajax error")
+            console.log(response)
         }
-    });
+    })
 </script>
 
 
