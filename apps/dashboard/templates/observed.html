@@ -38,7 +38,7 @@
             </button>
         </section>
         <div class="chart-container">
-            <canvas id="phone-price-chart"></canvas>
+            <canvas id="phone-price-chart-1"></canvas>
         </div>
     </div>
 </div>
@@ -77,15 +77,25 @@
                 <img src="{% static 'icons/all-offers-button.svg' %}" alt="all-offers-button" class="all-offers-button-icon">
             </button>
         </section>
-        <section class="chart-area">
-        </section>
+        <div class="chart-container">
+            <canvas id="phone-price-chart-2"></canvas>
+        </div>
     </div>
 </div>
 
 
 <script>
-    var endpoint = '/dashboard/api/price_chart_data'
+    // chart.js chart global config
+    Chart.defaults.font.size = 12;
+    Chart.defaults.font.color = '#605D5D';
+    Chart.defaults.font.family = 'Montserrat';
+    Chart.defaults.layout.padding = 5;
+    Chart.defaults.plugins.legend.display = false;
+    Chart.overrides.line.backgroundColor = '#2865D8';
+    Chart.overrides.line.borderColor = '#2865D8';
+    Chart.overrides.line.tension = 0.5;
 
+    var endpoint = '/dashboard/api/price_chart_data'
     $.ajax({
         method: "GET",
         url: endpoint,
@@ -96,15 +106,7 @@
             var dates = response.dates
             var prices = response.prices
 
-            Chart.defaults.font.size = 12;
-            Chart.defaults.font.color = '#605D5D';
-            Chart.defaults.font.family = 'Montserrat';
-
-            Chart.overrides.line.backgroundColor = '#2865D8';
-            Chart.overrides.line.borderColor = '#2865D8';
-            Chart.overrides.line.tension = 0.5;
-
-            var ctx = document.getElementById('phone-price-chart');
+            var ctx = document.getElementById('phone-price-chart-1');
             var myChart = new Chart(ctx, {
                 type: 'line',
                 data: {
@@ -114,15 +116,7 @@
                     }]
                 },
                 options: {
-                    maintainAspectRatio: false,
-                    layout: {
-                        padding: 5
-                    },
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    },
+                    maintainAspectRatio: false
                 }
             });
 
