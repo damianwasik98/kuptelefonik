@@ -234,6 +234,7 @@ div.result-info {
 .chart-container {
     position: relative;
     height: 100%;
+    padding: 5px;
 }
 
 .current-price {

@@ -84,22 +84,54 @@
 
 
 <script>
+
+    var dates = [
+        '5 miesięcy temu',
+        '4 miesiące temu',
+        '3 miesiące temu',
+        '2 miesiące temu',
+        '1 miesiąc temu',
+        '14 dni temu',
+        '2 dni temu'
+    ]
+
+    var prices = [
+        "4449.99",
+        "4149.99",
+        "4449.99",
+        "4449.99",
+        "4449.99",
+        "4449.99",
+        "4249.99",
+    ]
+
+    Chart.defaults.font.size = 12;
+    Chart.defaults.font.color = '#605D5D';
+    Chart.defaults.font.family = 'Montserrat';
+
+    Chart.overrides.line.backgroundColor = '#2865D8';
+    Chart.overrides.line.borderColor = '#2865D8';
+    Chart.overrides.line.tension = 0.5;
+
     var ctx = document.getElementById('phone-price-chart');
     var myChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            labels: dates,
             datasets: [{
-                data: [12, 19, 3, 5, 2, 3],
+                data: prices
             }]
         },
         options: {
             maintainAspectRatio: false,
-            scales: {
-                y: {
-                    beginAtZero: true
+            layout: {
+                padding: 5
+            },
+            plugins: {
+                legend: {
+                    display: false
                 }
-            }
+            },
         }
     });
 </script>
