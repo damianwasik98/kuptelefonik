@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
+from rest_framework.views import APIView
 
 # Create your views here.
 def index(request):
@@ -11,3 +12,57 @@ def search(request):
 
 def observed(request):
     return render(request, 'observed.html')
+
+class PhonePriceChartData(APIView):
+
+    authentication_classes = []
+    permission_classes = []
+
+    def get(self, request, format=None):
+
+        phone_id = int(request.GET.get('phone_id'))
+        if phone_id == 1:
+            chart_data = {
+                "phone_id": phone_id,
+                'prices': [
+                    "4449.99",
+                    "4149.99",
+                    "4449.99",
+                    "4449.99",
+                    "4449.99",
+                    "4449.99",
+                    "4249.99",
+                ],
+                'dates': [
+                    '5 miesięcy temu',
+                    '4 miesiące temu',
+                    '3 miesiące temu',
+                    '2 miesiące temu',
+                    '1 miesiąc temu',
+                    '14 dni temu',
+                    '2 dni temu'
+                ]
+            }
+        else:
+            chart_data = {
+                "phone_id": phone_id,
+                'prices': [
+                    "3649.99",
+                    "3649.99",
+                    "3649.99",
+                    "3199.99",
+                    "3449.99",
+                    "3449.99",
+                    "3449.99",
+                ],
+                'dates': [
+                    '5 miesięcy temu',
+                    '4 miesiące temu',
+                    '3 miesiące temu',
+                    '2 miesiące temu',
+                    '1 miesiąc temu',
+                    '14 dni temu',
+                    '2 dni temu'
+                ]
+            }
+        return JsonResponse(chart_data)
