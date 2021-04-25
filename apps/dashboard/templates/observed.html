@@ -95,37 +95,42 @@
     Chart.overrides.line.borderColor = '#2865D8';
     Chart.overrides.line.tension = 0.5;
 
-    var endpoint = '/dashboard/api/price_chart_data'
-    $.ajax({
-        method: "GET",
-        url: endpoint,
-        success: function(response){
-            console.log("ajax success")
-            console.log(response)
+    var observedPhonesIds = [1, 2];
 
-            var dates = response.dates
-            var prices = response.prices
+    function drawChart(phoneId) {
+        var endpoint = '/dashboard/api/price_chart_data?phone_id=' + phoneId;
+        $.ajax({
+            method: "GET",
+            url: endpoint,
+            success: function(response){
+                console.log("ajax success")
+                console.log(response)
 
-            var ctx = document.getElementById('phone-price-chart-1');
-            var myChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: dates,
-                    datasets: [{
-                        data: prices
-                    }]
-                },
-                options: {
-                    maintainAspectRatio: false
-                }
-            });
+                var dates = response.dates
+                var prices = response.prices
 
-        },
-        error: function(response){
-            console.log("ajax error")
-            console.log(response)
-        }
-    })
+                var ctx = document.getElementById('phone-price-chart-' + phoneId);
+                var myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: dates,
+                        datasets: [{
+                            data: prices
+                        }]
+                    },
+                    options: {
+                        maintainAspectRatio: false
+                    }
+                });
+            },
+            error: function(response){
+                console.log("ajax error")
+                console.log(response)
+            }
+        })
+    };
+
+    observedPhonesIds.forEach(drawChart)
 </script>
 
 
