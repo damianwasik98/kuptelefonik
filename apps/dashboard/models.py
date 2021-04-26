@@ -8,6 +8,7 @@ class Phone(models.Model):
     storage_unit = models.CharField(max_length=50)
     color = models.CharField(max_length=100, blank=True)
     img = models.ImageField(upload_to=f'phones', blank=True)
+    observed = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.name} {self.storage}{self.storage_unit}'
