@@ -30,8 +30,9 @@
                             <p class="value">{{ result.color }}</p>
                         </div>
                     </div>
-                    <form action="/dashboard/observed" method="GET" class="phone-observe-button-container">
-                        <button type="submit" class="observe-button">
+                    <form action="/dashboard/follow/{{ result.id }}" method="POST" class="phone-observe-button-container">
+                        {% csrf_token %}
+                        <button type="submit" class="observe-button follow-color">
                             <img src="{% static 'icons/favourite-bold.svg' %}" alt="favourite-bold">
                             <span>Obserwuj</span>
                         </button>

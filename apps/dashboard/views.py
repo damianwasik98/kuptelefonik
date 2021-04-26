@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
+from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from rest_framework.views import APIView
 
 from .models import Phone
@@ -14,7 +14,26 @@ def search(request):
     return render(request, 'search.html', {'query': query, 'results': search_result})
 
 def observed(request):
-    return render(request, 'observed.html')
+    observed_phones = Phone.objects.filter(observed=True)
+    return render(request, 'observed.html', {'observed_phones': observed_phones})
+
+def follow(request, phone_id):
+    '''
+    Adds phone into observed phones
+    '''
+    if request.method == 'POST':
+        phone = get_object_or_404(Phone, id=phone_id)
+        phone.follow()
+    return HttpResponseRedirect('/dashboard/observed')
+
+def unfollow(request, phone_id):
+    '''
+    Removes followed phone
+    '''
+    if request.method == 'POST':
+        phone = get_object_or_404(Phone, id=phone_id)
+        phone.unfollow()
+    return HttpResponseRedirect('/dashboard/observed')
 
 class PhonePriceChartData(APIView):
 

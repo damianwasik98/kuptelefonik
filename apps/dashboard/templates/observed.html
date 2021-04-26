@@ -3,23 +3,31 @@
 
 {% block content %}
 <h1 class="page-heading">Obserwowane telefony</h1>
+{% for phone in observed_phones %}
 <div class="observed-item">
     <div class="result">
         <div class="result-img">
-            <img src="{% static 'img/phones/apple-iphone-12-black.png' %}" alt="apple-iphone-12-black">
+            <img src="{{ phone.img.url }}" alt="phone-img">
         </div>
         <div class="result-info">
-            <p class="phone-name">iPhone 12</p>
+            <p class="phone-name">{{ phone.name }}</p>
             <div class="phone-details">
                 <div class="info-inline">
                     <p class="label">Pamięć</p>
-                    <p class="value">128GB</p>
+                    <p class="value">{{ phone.storage }}{{ phone.storage_unit }}</p>
                 </div>
                 <div class="info-inline">
                     <p class="label">Kolor</p>
-                    <p class="value">Czarny</p>
+                    <p class="value">{{ phone.color }}</p>
                 </div>
             </div>
+            <form action="/dashboard/unfollow/{{ phone.id }}" method="POST" class="phone-observe-button-container">
+                {% csrf_token %}
+                <button type="submit" class="observe-button unfollow-color">
+                    <img src="{% static 'icons/favourite-bold.svg' %}" alt="favourite-bold">
+                    <span>Usuń</span>
+                </button>
+            </form>
         </div>
     </div>
     <div class="price-chart">
@@ -38,50 +46,11 @@
             </button>
         </section>
         <div class="chart-container">
-            <canvas id="phone-price-chart-1"></canvas>
+            <canvas id="phone-price-chart-{{ phone.id }}"></canvas>
         </div>
     </div>
 </div>
-
-<div class="observed-item">
-    <div class="result">
-        <div class="result-img">
-            <img src="{% static 'img/phones/apple-iphone-12-mini-white.png' %}" alt="apple-iphone-12-mini-white">
-        </div>
-        <div class="result-info">
-            <p class="phone-name">iPhone 12 Mini</p>
-            <div class="phone-details">
-                <div class="info-inline">
-                    <p class="label">Pamięć</p>
-                    <p class="value">128GB</p>
-                </div>
-                <div class="info-inline">
-                    <p class="label">Kolor</p>
-                    <p class="value">Biały</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="price-chart">
-        <section class="price-chart-header">
-            <span>Najlepsza oferta</span>
-            <span class="current-price higher-price">3449 zł</span>
-            <img class="price-changed-icon" src="{% static 'icons/higher-price-icon.svg' %}" alt="higher-price-icon">
-            <span class="old-price">(3199 zł)</span>
-            <div class="notification">
-                <input type="checkbox" class="notification-switch"/>
-                <span class="notification-text">Powiadom mnie jeśli cena się zmieni</h3>
-            </div>
-            <button class="all-offers-button">
-                <span>Wszystkie oferty</span>
-                <img src="{% static 'icons/all-offers-button.svg' %}" alt="all-offers-button" class="all-offers-button-icon">
-            </button>
-        </section>
-        <div class="chart-container">
-            <canvas id="phone-price-chart-2"></canvas>
-        </div>
-    </div>
-</div>
+{% endfor %}
 
 
 <script>
