@@ -14,7 +14,8 @@ def search(request):
     return render(request, 'search.html', {'query': query, 'results': search_result})
 
 def observed(request):
-    return render(request, 'observed.html')
+    observed_phones = Phone.objects.filter(observed=True)
+    return render(request, 'observed.html', {'observed_phones': observed_phones})
 
 class PhonePriceChartData(APIView):
 
