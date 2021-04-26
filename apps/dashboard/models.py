@@ -12,3 +12,11 @@ class Phone(models.Model):
 
     def __str__(self):
         return f'{self.name} {self.storage}{self.storage_unit}'
+
+    def follow(self):
+        self.observed = True
+        self.save()
+
+    def unfollow(self):
+        self.observed = False
+        self.save()
