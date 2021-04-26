@@ -32,7 +32,7 @@
                     </div>
                     <form action="/dashboard/follow/{{ result.id }}" method="POST" class="phone-observe-button-container">
                         {% csrf_token %}
-                        <button type="submit" class="observe-button">
+                        <button type="submit" class="observe-button follow-color">
                             <img src="{% static 'icons/favourite-bold.svg' %}" alt="favourite-bold">
                             <span>Obserwuj</span>
                         </button>
