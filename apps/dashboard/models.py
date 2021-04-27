@@ -20,3 +20,17 @@ class Phone(models.Model):
     def unfollow(self):
         self.observed = False
         self.save()
+
+class Shop(models.Model):
+    
+    name = models.CharField(max_length=200)
+    logo = models.ImageField(upload_to='shops')
+    url = models.URLField()
+
+class Offer(models.Model):
+    
+    date = models.DateTimeField(auto_now_add=True) # phone price date
+    price = models.DecimalField(max_digits=6, decimal_places=2)
+    currency = models.CharField(max_length=3) # currency in format https://en.wikipedia.org/wiki/ISO_4217
+    phone = models.ForeignKey(Phone, on_delete=models.CASCADE)
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
