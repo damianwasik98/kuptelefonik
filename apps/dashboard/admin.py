@@ -1,6 +1,8 @@
 from django.contrib import admin
 
-from .models import Phone
+from . import models
 
 # Register your models here.
-admin.site.register(Phone)
+admin.site.register(models.Phone)
+admin.site.register(models.Shop)
+admin.site.register(models.Offer)
