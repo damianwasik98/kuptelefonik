@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from rest_framework.views import APIView
 
-from .models import Phone
+from .models import Phone, Offer
 
 # Create your views here.
 def index(request):
@@ -42,49 +42,16 @@ class PhonePriceChartData(APIView):
 
     def get(self, request, format=None):
 
-        phone_id = int(request.GET.get('phone_id'))
-        if phone_id == 1:
-            chart_data = {
-                "phone_id": phone_id,
-                'prices': [
-                    "4449.99",
-                    "4149.99",
-                    "4449.99",
-                    "4449.99",
-                    "4449.99",
-                    "4449.99",
-                    "4249.99",
-                ],
-                'dates': [
-                    '5 miesięcy temu',
-                    '4 miesiące temu',
-                    '3 miesiące temu',
-                    '2 miesiące temu',
-                    '1 miesiąc temu',
-                    '14 dni temu',
-                    '2 dni temu'
-                ]
-            }
-        else:
-            chart_data = {
-                "phone_id": phone_id,
-                'prices': [
-                    "3649.99",
-                    "3649.99",
-                    "3649.99",
-                    "3199.99",
-                    "3449.99",
-                    "3449.99",
-                    "3449.99",
-                ],
-                'dates': [
-                    '5 miesięcy temu',
-                    '4 miesiące temu',
-                    '3 miesiące temu',
-                    '2 miesiące temu',
-                    '1 miesiąc temu',
-                    '14 dni temu',
-                    '2 dni temu'
-                ]
-            }
+        observed_phones = Phone.get_observed()
+        
+        chart_data = {
+            "chart_data": [
+                {
+                    "phone_id": phone.id,
+                    'prices': [str(offer.price) for offer in phone.get_all_offers()],
+                    'dates': [offer.get_date_str() for offer in phone.get_all_offers()]
+                }
+                for phone in observed_phones
+            ]
+        }
         return JsonResponse(chart_data)
