@@ -64,42 +64,41 @@
     Chart.overrides.line.borderColor = '#2865D8';
     Chart.overrides.line.tension = 0.5;
 
-    var observedPhonesIds = [1, 2];
-
-    function drawChart(phoneId) {
-        var endpoint = '/dashboard/api/price_chart_data?phone_id=' + phoneId;
-        $.ajax({
-            method: "GET",
-            url: endpoint,
-            success: function(response){
-                console.log("ajax success")
-                console.log(response)
-
-                var dates = response.dates
-                var prices = response.prices
-
-                var ctx = document.getElementById('phone-price-chart-' + phoneId);
-                var myChart = new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: dates,
-                        datasets: [{
-                            data: prices
-                        }]
-                    },
-                    options: {
-                        maintainAspectRatio: false
-                    }
-                });
+    function drawChart(phoneId, dates, prices){
+        var ctx = document.getElementById('phone-price-chart-' + phoneId);
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: dates,
+                datasets: [{
+                    data: prices
+                }]
             },
-            error: function(response){
-                console.log("ajax error")
-                console.log(response)
+            options: {
+                maintainAspectRatio: false
             }
-        })
+        });
     };
 
-    observedPhonesIds.forEach(drawChart)
+    var endpoint = '/dashboard/api/price_chart_data';
+    $.ajax({
+        method: "GET",
+        url: endpoint,
+        success: function(response){
+            console.log("ajax success")
+            console.log(response)
+
+            var chart_data = response.chart_data
+            chart_data.forEach(function(item){
+                drawChart(item.phone_id, item.dates, item.prices);
+            });
+        },
+        error: function(response){
+            console.log("ajax error")
+            console.log(response)
+        }
+    })
+
 </script>
 
 
