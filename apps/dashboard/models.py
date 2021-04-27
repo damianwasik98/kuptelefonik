@@ -27,10 +27,16 @@ class Shop(models.Model):
     logo = models.ImageField(upload_to='shops')
     url = models.URLField()
 
+    def __str__(self):
+        return self.name
+
 class Offer(models.Model):
     
-    date = models.DateTimeField(auto_now_add=True) # phone price date
+    date = models.DateTimeField() # phone price date
     price = models.DecimalField(max_digits=6, decimal_places=2)
     currency = models.CharField(max_length=3) # currency in format https://en.wikipedia.org/wiki/ISO_4217
     phone = models.ForeignKey(Phone, on_delete=models.CASCADE)
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.phone} {self.price}'
