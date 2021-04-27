@@ -21,6 +21,14 @@ class Phone(models.Model):
         self.observed = False
         self.save()
 
+    def get_all_offers(self):
+        return self.offer_set.all()
+
+    @classmethod
+    def get_observed(cls):
+        return cls.objects.filter(observed=True)
+
+
 class Shop(models.Model):
     
     name = models.CharField(max_length=200)
@@ -40,3 +48,6 @@ class Offer(models.Model):
 
     def __str__(self):
         return f'{self.phone} {self.price}'
+
+    def get_date_str(self):
+        return self.date.strftime('%Y-%m-%d')
