@@ -11,7 +11,7 @@ class Phone(models.Model):
     observed = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'{self.name} {self.storage}{self.storage_unit}'
+        return f'{self.name} {self.storage}{self.storage_unit} {self.color}'
 
     def follow(self):
         self.observed = True
