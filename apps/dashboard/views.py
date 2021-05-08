@@ -48,7 +48,7 @@ class PhonePriceChartData(APIView):
             "chart_data": [
                 {
                     "phone_id": phone.id,
-                    'prices': [str(offer.price) for offer in phone.get_all_offers()],
+                    'prices': [float(offer.price) for offer in phone.get_all_offers()],
                     'dates': [offer.get_date_str() for offer in phone.get_all_offers()]
                 }
                 for phone in observed_phones

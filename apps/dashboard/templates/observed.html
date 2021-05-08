@@ -45,42 +45,87 @@
                 <img src="{% static 'icons/all-offers-button.svg' %}" alt="all-offers-button" class="all-offers-button-icon">
             </button>
         </section>
-        <div class="chart-container">
-            <canvas id="phone-price-chart-{{ phone.id }}"></canvas>
-        </div>
+        <div class="chart-container" id="phone-price-chart-{{ phone.id }}"></div>
     </div>
 </div>
 {% endfor %}
 
-
 <script>
-    // chart.js chart global config
-    Chart.defaults.font.size = 12;
-    Chart.defaults.font.color = '#605D5D';
-    Chart.defaults.font.family = 'Montserrat';
-    Chart.defaults.layout.padding = 5;
-    Chart.defaults.plugins.legend.display = false;
-    Chart.overrides.line.backgroundColor = '#2865D8';
-    Chart.overrides.line.borderColor = '#2865D8';
-    Chart.overrides.line.tension = 0.5;
 
-    function drawChart(phoneId, dates, prices){
-        var ctx = document.getElementById('phone-price-chart-' + phoneId);
-        var myChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: dates,
-                datasets: [{
-                    data: prices
-                }]
-            },
-            options: {
-                maintainAspectRatio: false
-            }
+    function prepareRows(phone_data){
+        var dates = phone_data.dates;
+        var prices = phone_data.prices;
+
+        var rows = dates.map(function(date, i) {
+            return [new Date(date), prices[i]]
         });
-    };
+        return rows;
+    }
 
-    var endpoint = '/dashboard/api/price_chart_data';
+    function drawCharts(chart_data){
+        for (let obj of chart_data) {
+                var phoneId = obj.phone_id;
+                var rows = prepareRows(obj);
+                drawChart(phoneId, rows);
+            }
+    }
+    
+    function drawChart(phoneId, preparedRows) {
+        var options = {
+            aggregationTarget: "auto",
+            animation: {
+                startup: true,
+                easing: "out",
+                duration: 300
+            },
+            crosshair: {
+                trigger: "both",
+                orientation: "vertical",
+                opacity: 0.5,
+            },
+            curveType: "function",
+            focusTarget: "category",
+            fontName: "Montserrat",
+            fontSize: 12,
+            chartArea: {
+                top: "10%",
+                left: "6%",
+                right: "6%",
+                bottom: "10%",
+                height: "100%",
+                width: "100%"
+            },
+            lineWidth: 3,
+            hAxis: {
+                showTextEvery: 5, // TODO: solve better with tix
+                format: "d MMM",
+            },
+            explorer: {
+                axis: "horizontal",
+                actions: ["dragToPan"],
+                keepInBounds: true,
+            },
+            vAxis: {
+                format: "decimal",
+                gridlines: {
+                    count: -1,
+                },
+            },
+            legend: {
+                position: "none",
+            }
+        };
+        var data = new google.visualization.DataTable();
+        data.addColumn("date", "Data");
+        data.addColumn("number", "Cena");
+        data.addRows(preparedRows);
+        data.sort({column: 0})
+
+        var chart = new google.visualization.LineChart(document.getElementById('phone-price-chart-' + phoneId));
+        chart.draw(data, options);
+    }
+
+    var endpoint = "/dashboard/api/price_chart_data";
     $.ajax({
         method: "GET",
         url: endpoint,
@@ -89,9 +134,8 @@
             console.log(response)
 
             var chart_data = response.chart_data
-            chart_data.forEach(function(item){
-                drawChart(item.phone_id, item.dates, item.prices);
-            });
+            google.charts.load("current", {packages: ["corechart", "line"], language: "pl"});
+            google.charts.setOnLoadCallback(function(){ drawCharts(chart_data) });
         },
         error: function(response){
             console.log("ajax error")

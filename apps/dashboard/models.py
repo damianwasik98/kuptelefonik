@@ -47,7 +47,7 @@ class Offer(models.Model):
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.phone} {self.price}'
+        return f'{self.get_date_str()} {self.phone} {self.price}'
 
     def get_date_str(self):
         return self.date.strftime('%Y-%m-%d')
