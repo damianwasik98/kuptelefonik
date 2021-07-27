@@ -1,0 +1,86 @@
+\documentclass[twoside,a4paper,12pt]{report} %,draft,openright
+
+\usepackage{polski}
+\usepackage[utf8]{inputenc} 
+\usepackage{gensymb}
+\usepackage{epsf,graphicx}
+\usepackage{subfigure}
+\usepackage{latexsym,amssymb}
+\usepackage{setspace,cite}
+\usepackage{indentfirst}
+\usepackage{mathtools}
+\usepackage[justification=centering]{caption}
+\usepackage{multirow}
+\usepackage[figuresright]{rotating}
+
+% for margins left, right top bottom
+\usepackage{anysize}
+\marginsize{3cm}{2.5cm}{2.5cm}{2.5cm}
+\let\origdoublepage\cleardoublepage    %%komenda wstawiająca czyste kartki
+\newcommand{\clearemptydoublepage}{%
+  \clearpage
+  {\pagestyle{empty}\origdoublepage}%
+}
+\let\cleardoublepage\clearemptydoublepage
+
+
+%\usepackage{draft} %draft option - doesn't put full figures in -
+            % useful when editing
+
+%does the headers on the pages - keep in
+\usepackage{fancyhdr}
+
+%omitting any of these makes the thesis compile without the omitted
+%chapter - good for editing single chapters.
+%\includeonly{header,appendix}
+
+
+\begin{document}
+\newpage
+
+%Puts page numbering of preamble in roman and of main body of thesis in
+%arabic. Also defines how chapters and sections are made
+\pagenumbering{arabic}
+\setcounter{page}{1} \pagestyle{fancy}
+\renewcommand{\chaptermark}[1]{\markboth{\chaptername%
+\ \thechapter:\,\ #1}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\,\ #1}}
+
+%DEFINES TITLE PAGE, and contains abstract, acknowledgements, etc.
+
+\include{header}
+
+
+\newpage
+
+%sets up headers for lefthand and righthand pages. To alter, edit
+%these lines and the chaptermark/sectionmark lines above
+%\addtolength{\headheight}{3pt} \fancyhead{}
+%\fancyhead[LE]{\sl\leftmark} \fancyhead[LO,RE]{\rm\thepage}
+%\fancyhead[RO]{\sl\rightmark} \fancyfoot[C,L,E]{}
+\pagenumbering{arabic}
+\fancyhead[LE,RO]{\slshape \rightmark}
+\fancyhead[LO,RE]{\slshape \leftmark}
+\fancyfoot[C]{\thepage}
+
+
+\setlength{\parskip}{1ex} %odstępy między akapitami
+%\singlespacing
+%\doublespacing
+\onehalfspacing
+\input{chapters/1_introduction.tex}
+
+
+%   this is for BibTeX.  remove if you plan to write the references in the document
+\bibliographystyle{plplain}
+\bibliography{refs}
+
+%adds the bibliography to the table of contents
+\addcontentsline{toc}{chapter}
+         {\protect\numberline{Bibliografia\hspace{-96pt}}}
+         
+%dodatki
+\appendix
+\input{appendix.tex}
+
+\end{document}
