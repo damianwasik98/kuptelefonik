@@ -1,0 +1,78 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% This is a sample header for a sample dissertation. Fill in the name,
+% and the other information. LaTeX will work out the table of
+% content, the list of figures and of tables for you.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\thispagestyle{empty}
+
+
+
+
+% ******* Title page *******
+% **************************
+
+\begin{onehalfspacing}
+\begin{center}
+
+\centering
+\includegraphics[keepaspectratio,scale=0.4]{./figures/logo_uł.png} \\[.8cm]
+
+
+{\fontsize{17}{17}\selectfont
+\textsc{Uniwersytet Łódzki \\[.3cm]
+Wydział Matematyki i Informatyki  \\[.3cm]
+Kierunek Analiza danych  \\[2.5cm]}
+\textbf{Praca dyplomowa inżynierska \\[1.7cm]}}
+
+
+
+\large 
+{Projektowanie aplikacji internetowych z wykorzystaniem frameworka Django} \\[2.3cm]
+% Jeśli tytuł pracy zajmuje 2 linijki, wartość [2.3cm] zamieniamy na [3.1cm], jeśli tylko jedną - na [3.9cm] i odwrotnie - zwiększając liczbę linijek o jedną (do czterech) zmieniamy na [1.5cm] itd.
+
+
+\large
+\begin{flushleft}
+Autor: inż. Damian Wąsik  \\
+Promotor pracy:  dr Piotr Fulmański \\
+\end{flushleft}
+
+\vspace{3cm}
+Łódź, 2021
+\end{center}
+\end{onehalfspacing}
+
+%\singlespacing
+%\newpage
+%\thispagestyle{empty}
+%\mbox{}
+
+
+%ABSTRACT
+%\begin{abstract}
+%The abstract will go here.... \\
+%W tym miejscu można umieścić abstrakt pracy. W przeciwnym wypadku należy %usunąć/zakomentować ninijeszy fragment kodu.
+%\end{abstract}
+%END OF ABSTRACT
+
+
+%\doublespacing
+%\newpage
+%\thispagestyle{empty}
+%\mbox{}
+
+%\pagestyle{empty}
+\pagenumbering{Roman}
+\setcounter{page}{0} \pagestyle{plain}
+
+
+\tableofcontents
+
+\listoffigures
+\listoftables
+
+
+
+\pagestyle{fancy}
