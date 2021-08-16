@@ -3,25 +3,25 @@
 
 {% block content %}
 <h1 class="page-heading">Obserwowane telefony</h1>
-{% for phone in observed_phones %}
+{% for data in phone_data %}
 <div class="observed-item">
     <div class="result">
         <div class="result-img">
-            <img src="{{ phone.img.url }}" alt="phone-img">
+            <img src="{{ data.phone.img.url }}" alt="phone-img">
         </div>
         <div class="result-info">
-            <p class="phone-name">{{ phone.name }}</p>
+            <p class="phone-name">{{ data.phone.name }}</p>
             <div class="phone-details">
                 <div class="info-inline">
                     <p class="label">Pamięć</p>
-                    <p class="value">{{ phone.storage }}{{ phone.storage_unit }}</p>
+                    <p class="value">{{ data.phone.storage }}{{ data.phone.storage_unit }}</p>
                 </div>
                 <div class="info-inline">
                     <p class="label">Kolor</p>
-                    <p class="value">{{ phone.color }}</p>
+                    <p class="value">{{ data.phone.color }}</p>
                 </div>
             </div>
-            <form action="/dashboard/unfollow/{{ phone.id }}" method="POST" class="phone-observe-button-container">
+            <form action="/dashboard/unfollow/{{ data.phone.id }}" method="POST" class="phone-observe-button-container">
                 {% csrf_token %}
                 <button type="submit" class="observe-button unfollow-color">
                     <img src="{% static 'icons/favourite-bold.svg' %}" alt="favourite-bold">
@@ -33,9 +33,17 @@
     <div class="price-chart">
         <section class="price-chart-header">
             <span>Najlepsza oferta</span>
-            <span class="current-price lower-price">4249 zł</span>
+            {% if data.price_state.name == "DECREASED" %}
+            <span class="current-price lower-price">{{ data.current_price }} zł</span>
             <img class="price-changed-icon" src="{% static 'icons/lower-price-icon.svg' %}" alt="lower-price-icon">
-            <span class="old-price">(4449 zł)</span>
+            <span class="old-price">({{ data.old_price }} zł)</span>
+            {% elif data.price_state.name == "INCREASED" %}
+            <span class="current-price higher-price">{{ data.current_price }} zł</span>
+            <img class="price-changed-icon" src="{% static 'icons/higher-price-icon.svg' %}" alt="higher-price-icon">
+            <span class="old-price">({{ data.old_price }} zł)</span>
+            {% else %}
+            <span class="current-price">{{ data.current_price }} zł</span>
+            {% endif %}
             <div class="notification">
                 <input type="checkbox" class="notification-switch"/>
                 <span class="notification-text">Powiadom mnie jeśli cena się zmieni</h3>
@@ -45,7 +53,7 @@
                 <img src="{% static 'icons/all-offers-button.svg' %}" alt="all-offers-button" class="all-offers-button-icon">
             </button>
         </section>
-        <div class="chart-container" id="phone-price-chart-{{ phone.id }}"></div>
+        <div class="chart-container" id="phone-price-chart-{{ data.phone.id }}"></div>
     </div>
 </div>
 {% endfor %}
