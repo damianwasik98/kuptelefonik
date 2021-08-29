@@ -4,17 +4,21 @@ from rest_framework.views import APIView
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 from django.db.utils import IntegrityError
+from django.contrib.auth.decorators import login_required
 
 from .models import Phone, ObservedPhone
 
+@login_required
 def index(request):
     return render(request, 'index.html')
 
+@login_required
 def search(request):
     query = request.GET.get('query')
     search_result = Phone.objects.all()
     return render(request, 'search.html', {'query': query, 'results': search_result})
 
+@login_required
 def observed(request):
     observed_phones = ObservedPhone.get_user_observed_phones(user_id=request.user.id)
 
@@ -61,6 +65,7 @@ def observed(request):
     
     return render(request, 'observed.html', {'phone_data': phone_data})
 
+@login_required
 def follow(request, phone_id):
     '''
     Adds phone into observed phones
@@ -70,6 +75,7 @@ def follow(request, phone_id):
 
     return HttpResponseRedirect('/dashboard/observed')
 
+@login_required
 def unfollow(request, phone_id):
     '''
     Removes followed phone
