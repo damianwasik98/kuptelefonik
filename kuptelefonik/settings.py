@@ -11,7 +11,10 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+
+import dj_database_url
 from dotenv import load_dotenv
+
 from django.core.management.utils import get_random_secret_key
 
 load_dotenv() #load .env file with secure variables
@@ -19,15 +22,17 @@ load_dotenv() #load .env file with secure variables
 
 class InvalidEnv(Exception):
 
-    def __init__(self, env):
-        self.env = env
+    def __init__(self, env_key, env_val):
+        self.env_key = env_key
+        self.env_val = env_val
     
     def __str__(self):
-        return f"{self.env} env value is invalid"
+        return f"\"{self.env_val}\" is invalid value for env \"{self.env_key}\""
 
 
 def load_debug_env():
-    env = os.getenv("DEBUG", False)
+    env_key = "DEBUG"
+    env = os.getenv(env_key, False)
     if env is False:
         return env
 
@@ -39,7 +44,7 @@ def load_debug_env():
     try:
         return env_cast_map[env.lower()]
     except KeyError:
-        raise InvalidEnv(env)
+        raise InvalidEnv(env_key=env_key, env_val=env)
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -105,11 +110,21 @@ WSGI_APPLICATION = 'kuptelefonik.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+def load_db_url():
+    """
+    url schema https://github.com/jacobian/dj-database-url#url-schema
+    """
+    env_key = "DATABASE_URL"
+    default_sqlite_path = os.path.join(BASE_DIR, "db.sqlite3")
+    env = os.getenv(env_key, f"sqlite:///{default_sqlite_path}")
+    try:
+        return dj_database_url.parse(env)
+    except KeyError:
+        raise InvalidEnv(env_key=env_key, env_val=env)
+
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+    "default": load_db_url()
 }
 
 
