@@ -3,7 +3,7 @@ from django.http import JsonResponse, HttpResponseRedirect
 from rest_framework.views import APIView
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
-from django.db.utils import IntegrityError
+from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 
 from .models import Phone, ObservedPhone
@@ -71,7 +71,12 @@ def follow(request, phone_id):
     Adds phone into observed phones
     '''
     if request.method == 'POST':
-        ObservedPhone.follow(phone_id=phone_id, user_id=request.user.id)
+        try:
+            observed_obj = ObservedPhone.objects.get(phone_id=55, user_id=request.user.id)
+        except ObjectDoesNotExist:
+            pass
+        else:
+            ObservedPhone.follow(phone_id=phone_id, user_id=request.user.id)
 
     return HttpResponseRedirect('/dashboard/observed')
 
