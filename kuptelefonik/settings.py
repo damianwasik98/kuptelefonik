@@ -16,8 +16,31 @@ from django.core.management.utils import get_random_secret_key
 
 load_dotenv() #load .env file with secure variables
 
-def _env_str_to_bool(env: str) -> bool:
-    return bool(env)
+
+class InvalidEnv(Exception):
+
+    def __init__(self, env):
+        self.env = env
+    
+    def __str__(self):
+        return f"{self.env} env value is invalid"
+
+
+def load_debug_env():
+    env = os.getenv("DEBUG", False)
+    if env is False:
+        return env
+
+    env_cast_map = {
+        "true": True,
+        "false": False
+    }
+
+    try:
+        return env_cast_map[env.lower()]
+    except KeyError:
+        raise InvalidEnv(env)
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -30,7 +53,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.getenv("SECRET_KEY", get_random_secret_key())
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = _env_str_to_bool(os.getenv("DEBUG", False))
+DEBUG = load_debug_env()
 
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
 
