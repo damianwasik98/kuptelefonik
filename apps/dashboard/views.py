@@ -5,6 +5,7 @@ from rest_framework.authentication import SessionAuthentication, BasicAuthentica
 from rest_framework.permissions import IsAuthenticated
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 from .models import Phone, ObservedPhone
 
@@ -15,7 +16,7 @@ def index(request):
 @login_required
 def search(request):
     query = request.GET.get('query')
-    search_result = Phone.objects.all()
+    search_result = Phone.objects.filter(Q(name__icontains=query)) if query else []
     return render(request, 'search.html', {'query': query, 'results': search_result})
 
 @login_required
