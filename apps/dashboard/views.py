@@ -73,10 +73,8 @@ def follow(request, phone_id):
     '''
     if request.method == 'POST':
         try:
-            observed_obj = ObservedPhone.objects.get(phone_id=55, user_id=request.user.id)
+            ObservedPhone.objects.get(phone_id=phone_id, user_id=request.user.id)
         except ObjectDoesNotExist:
-            pass
-        else:
             ObservedPhone.follow(phone_id=phone_id, user_id=request.user.id)
 
     return HttpResponseRedirect('/dashboard/observed')
