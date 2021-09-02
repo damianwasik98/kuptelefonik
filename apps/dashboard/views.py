@@ -39,8 +39,6 @@ def observed(request):
 
 
     def price_state(current_price, observed_starting_price) -> bool:
-        print(current_price, observed_starting_price)
-        print(current_price == observed_starting_price)
         if not all([current_price, observed_starting_price]):
             return PriceState.UNKNOWN
         elif current_price > observed_starting_price:
