@@ -73,7 +73,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'apps.dashboard',
-    'rest_framework'
+    'apps.data_collecting',
+    'rest_framework',
+    'django_celery_beat'
 ]
 
 MIDDLEWARE = [
@@ -174,3 +176,6 @@ MEDIA_URL = '/media/'
 # Auth
 LOGIN_REDIRECT_URL = "/dashboard"
 LOGOUT_REDIRECT_URL = "/accounts/login"
+
+CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL", "amqp://guest:guest@localhost:5672")
+CELERY_TIMEZONE = "Europe/Warsaw"
