@@ -7,6 +7,7 @@ db.sqlite3
 .python-version
 media/
 static/ 
+!src/apps/**/static/
 **/*.egg-info/*
 .pytest_cache
 celerybeat-schedule
