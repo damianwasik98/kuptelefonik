@@ -88,7 +88,7 @@ class Offer(models.Model):
     
     date = models.DateTimeField() # phone price date
     price = models.DecimalField(max_digits=6, decimal_places=2)
-    currency = models.CharField(max_length=3) # currency in format https://en.wikipedia.org/wiki/ISO_4217
+    currency = models.CharField(max_length=3, default="zł") # currency in format https://en.wikipedia.org/wiki/ISO_4217
     phone = models.ForeignKey(Phone, on_delete=models.CASCADE)
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
 
