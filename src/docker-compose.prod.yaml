@@ -1,0 +1,69 @@
+version: '3.9'
+
+x-envs:
+  environment: &django-env
+    DEBUG: "False"
+    SECRET_KEY: ${SECRET_KEY:?provide secret key for django project}
+    ALLOWED_HOSTS: ${ALLOWED_HOSTS:-127.0.0.1,localhost}
+    DATABASE_URL: postgresql://${POSTGRES_USER:?}:${POSTGRES_PASSWORD:?}@postgresql:5432/${POSTGRES_DB:?}
+    CELERY_BROKER_URL: amqp://${RABBITMQ_DEFAULT_USER:?}:${RABBITMQ_DEFAULT_PASS:?}@rabbitmq:5672
+
+
+services:
+  kuptelefonik:
+    restart: always
+    command: gunicorn kuptelefonik.wsgi:application --workers 3 --bind 0.0.0.0:8008
+    expose:
+      - 8008
+    environment:
+      <<: *django-env
+    volumes:
+      - static:/opt/kuptelefonik/static
+      - media:/opt/kuptelefonik/media
+  rabbitmq:
+    restart: always
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER:?}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS:?}
+    ports:
+      - ${RABBITMQ_PORT:?}:5672
+      - ${RABBITMQ_MANAGEMENT_PORT:?}:15672
+  postgresql:
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:?}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?}
+      POSTGRES_DB: ${POSTGRES_DB:?}
+    ports:
+      - ${POSTGRES_PORT:?}:5432
+    volumes:
+      - postgresql_data_prod:/var/lib/postgresql/data
+  nginx:
+    restart: always
+    build: ./nginx
+    ports:
+      - 443:443
+      - 80:80
+    depends_on:
+      - kuptelefonik
+    volumes:
+      - static:/opt/kuptelefonik/static
+      - media:/opt/kuptelefonik/media
+  celery_worker:
+    environment:
+      <<: *django-env
+    restart: always
+  celery_beat:
+    environment:
+      <<: *django-env
+    restart: always
+  flower:
+    environment:
+      <<: *django-env
+    restart: always
+    command: celery --broker=amqp://${RABBITMQ_DEFAULT_USER:?}:${RABBITMQ_DEFAULT_PASS:?}@rabbitmq:5672 flower
+
+volumes:
+  postgresql_data_prod:
+  static:
+  media:
