@@ -1,8 +1,9 @@
+from datetime import datetime
+
 from django.db import models
 from django.db.models import Min
 from django.db.models.functions import TruncDay
 from django.contrib.auth.models import User
-from decimal import Decimal
 
 class Phone(models.Model):
 
@@ -97,3 +98,16 @@ class Offer(models.Model):
 
     def get_date_str(self):
         return self.date.strftime('%Y-%m-%d')
+
+    @classmethod
+    def save_new_offer(cls, phone_id, shop_id, price):
+        phone = Phone.objects.get(id=phone_id)
+        shop = Shop.objects.get(id=shop_id) 
+
+        offer = Offer(
+            date=datetime.now(),
+            price=price,
+            phone=phone,
+            shop=shop
+        )
+        offer.save()
