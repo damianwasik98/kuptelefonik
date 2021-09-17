@@ -39,6 +39,7 @@ services:
     volumes:
       - postgresql_data_prod:/var/lib/postgresql/data
   nginx:
+    container_name: nginx
     restart: always
     build: ./nginx
     ports:
@@ -60,8 +61,9 @@ services:
   flower:
     environment:
       <<: *django-env
+      FLOWER_BASIC_AUTH: ${FLOWER_USERNAME:?}:${FLOWER_PASSWORD:?}
     restart: always
-    command: celery --broker=amqp://${RABBITMQ_DEFAULT_USER:?}:${RABBITMQ_DEFAULT_PASS:?}@rabbitmq:5672 flower
+    command: celery flower
 
 volumes:
   postgresql_data_prod:

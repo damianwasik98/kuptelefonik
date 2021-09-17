@@ -33,6 +33,7 @@ services:
       - 15672:15672
   postgresql:
     image: postgres
+    container_name: postgresql
     restart: on-failure
     environment:
       POSTGRES_USER: postgres
@@ -62,11 +63,14 @@ services:
       <<: *django-env
   flower:
     image: mher/flower
+    container_name: flower
     depends_on:
       - rabbitmq
       - celery_worker
       - celery_beat
-    command: celery --broker=amqp://guest:guest@rabbitmq:5672 flower
+    command: celery -A kuptelefonik flower
+    environment:
+      <<: *django-env
     ports:
       - ${FLOWER_PORT:-5555}:5555
 
