@@ -14,3 +14,10 @@ class InvalidURL(Exception):
 
     def __str__(self):
         return f"{self.url} is not valid URL"
+
+    
+class PhoneUnavailable(Exception):
+
+    def __init__(self, page_html):
+        self.page_html =  page_html
+        super().__init__("Phone is unavailable at the moment.")
