@@ -7,7 +7,11 @@
 <div class="observed-item">
     <div class="result">
         <div class="result-img">
+            {% if data.phone.img.name %}
             <img src="{{ data.phone.img.url }}" alt="phone-img">
+            {% else %}
+            <img alt="no-image">
+            {% endif %}
         </div>
         <div class="result-info">
             <p class="phone-name">{{ data.phone.name }}</p>
