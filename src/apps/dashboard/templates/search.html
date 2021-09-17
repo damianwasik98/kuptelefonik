@@ -16,7 +16,11 @@
             {% for result in results %}
             <div class="result">
                 <div class="result-img">
-                    <img src="{{ result.img.url }}" alt="apple-iphone-12-black">
+                    {% if result.img.name %}
+                    <img src="{{ result.img.url }}" alt="{{ result.img.name }}">
+                    {% else %}
+                    <img alt="no-image">
+                    {% endif %}
                 </div>
                 <div class="result-info">
                     <p class="phone-name">{{ result.name }}</p>
