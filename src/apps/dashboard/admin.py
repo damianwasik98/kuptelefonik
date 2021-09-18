@@ -1,7 +1,10 @@
 from django.contrib import admin
 
 from . import models
+from apps.data_collecting.models import OffersScrapingData
 
+class OffersScrapingDataInline(admin.TabularInline):
+    model = OffersScrapingData
 
 @admin.register(models.Phone)
 class PhoneAdmin(admin.ModelAdmin):
@@ -11,16 +14,28 @@ class PhoneAdmin(admin.ModelAdmin):
         "storage",
         "storage_unit",
         "color",
-        "img"
+        "img",
     )
 
     list_editable = (
         "name",
         "storage",
         "storage_unit",
-        "color"
+        "color",
     )
 
+    search_fields = [
+        "name",
+    ]
+
+    list_filter = (
+        "storage",
+        "color",
+    )
+
+    inlines = [
+        OffersScrapingDataInline
+    ]
 
 @admin.register(models.ObservedPhone)
 class ObservedPhoneAdmin(admin.ModelAdmin):
@@ -29,7 +44,12 @@ class ObservedPhoneAdmin(admin.ModelAdmin):
         "phone",
         "user",
         "date",
-        "price"
+        "price",
+    )
+
+    list_filter = (
+        "phone",
+        "user",
     )
 
 
@@ -44,7 +64,7 @@ class ShopAdmin(admin.ModelAdmin):
 
     list_editable = (
         "name",
-        "url"
+        "url",
     )
 
 
@@ -57,4 +77,9 @@ class OfferAdmin(admin.ModelAdmin):
         "phone",
         "price",
         "currency",
+    )
+
+    list_filter = (
+        "shop",
+        "phone",
     )
