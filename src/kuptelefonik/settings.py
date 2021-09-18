@@ -66,6 +66,8 @@ ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
 # Application definition
 
 INSTALLED_APPS = [
+    'admin_interface',
+    'colorfield',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -75,7 +77,7 @@ INSTALLED_APPS = [
     'apps.dashboard',
     'apps.data_collecting',
     'rest_framework',
-    'django_celery_beat'
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
@@ -179,3 +181,9 @@ LOGOUT_REDIRECT_URL = "/accounts/login"
 
 CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL", "amqp://guest:guest@localhost:5672")
 CELERY_TIMEZONE = "Europe/Warsaw"
+
+
+# Django admin interface https://github.com/fabiocaccamo/django-admin-interface#installation
+# only if django version >= 3.0
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+SILENCED_SYSTEM_CHECKS = ['security.W019']
