@@ -50,6 +50,8 @@ services:
       - rabbitmq
       - kuptelefonik
     command: celery -A kuptelefonik worker -l debug
+    volumes:
+      - ./:/opt/kuptelefonik
     environment:
       <<: *django-env
   celery_beat:
@@ -68,7 +70,7 @@ services:
       - rabbitmq
       - celery_worker
       - celery_beat
-    command: celery -A kuptelefonik flower
+    command: celery flower
     environment:
       <<: *django-env
     ports:
