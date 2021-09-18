@@ -27,3 +27,8 @@ urlpatterns = [
 
 if settings.DEBUG is True:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+admin.site.site_header = "Kuptelefonik Administration"
+admin.site.index_title = "Kuptelefonik Site"
+admin.site.site_title = "Kuptelefonik"
