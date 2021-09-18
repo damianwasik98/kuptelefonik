@@ -29,6 +29,7 @@ def downloader(input_data: dict):
     html = html_gatherer.get_html(url=data.offer_url)  
 
     scraper.delay(html, input_data)
+    return html
 
 
 @shared_task
@@ -49,3 +50,4 @@ def scraper(html: str, input_data: dict):
         shop=shop
     )
     offer.save()
+    return price
