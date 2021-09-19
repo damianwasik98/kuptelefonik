@@ -8,5 +8,9 @@ class PhoneOfferScraper(ABC):
         ...
 
     @abstractmethod
+    def is_phone_available(self) -> bool:
+        ...
+
+    @abstractmethod
     def get_price(self) -> Decimal:
         ...

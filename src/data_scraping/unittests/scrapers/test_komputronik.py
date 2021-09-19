@@ -1,4 +1,5 @@
 from pathlib import Path
+from data_scraping.scrapers.exceptions import PhoneUnavailable
 
 import pytest
 from decimal import Decimal
@@ -119,5 +120,77 @@ def test_extract_ecommerce_js_event_dict(test_html):
     }
 
 
-def test_get_price(test_html):
-    assert KomputronikScraper(offer_page_html=test_html).get_price() == Decimal(4199)
+def test_get_price_raises(test_html):
+    with pytest.raises(PhoneUnavailable):
+        KomputronikScraper(offer_page_html=test_html).get_price()
+
+
+def test_get_price_success(mocker, test_html):
+    mocked_js_event_dict = {
+        "ecommerce": {
+            "currencyCode": "PLN",
+            "detail": {
+                "products": [
+                    {
+                        "price": "4199",
+                        "availability": "available"
+                    }
+                ]
+            }
+        }
+    }
+    mocker.patch(
+        "data_scraping.scrapers.komputronik.KomputronikScraper.extract_ecommerce_js_event_dict", 
+        return_value=mocked_js_event_dict
+    )
+
+    scraper = KomputronikScraper(offer_page_html=test_html)
+    assert scraper.get_price() == Decimal(4199)
+
+def test_is_phone_available_true():
+    test_event_dict = {
+        "ecommerce": {
+            "detail": {
+                "products": [
+                    {
+                        "availability": "available"
+                    }
+                ]
+            }
+        }
+    }
+
+    assert KomputronikScraper.is_phone_available(test_event_dict) is True
+
+
+def test_is_phone_available_false():
+    test_event_dict = {
+        "ecommerce": {
+            "detail": {
+                "products": [
+                    {
+                        "availability": "unavailable"
+                    }
+                ]
+            }
+        }
+    }
+
+    assert KomputronikScraper.is_phone_available(test_event_dict) is False
+
+
+def test_is_phone_available_raises():
+    test_event_dict = {
+        "ecommerce": {
+            "detail": {
+                "products": [
+                    {
+                        "availability": "unexpected_status"
+                    }
+                ]
+            }
+        }
+    }
+
+    with pytest.raises(NotImplementedError):
+        KomputronikScraper.is_phone_available(test_event_dict)
