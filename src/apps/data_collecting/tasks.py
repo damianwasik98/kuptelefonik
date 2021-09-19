@@ -47,7 +47,8 @@ def scraper(html: str, input_data: dict):
         date=datetime.now(),
         price=price,
         phone=phone,
-        shop=shop
+        shop=shop,
+        url=input_data.offer_url
     )
     offer.save()
     return price
