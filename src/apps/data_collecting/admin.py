@@ -11,3 +11,5 @@ class OffersScrapingDataAdmin(admin.ModelAdmin):
         "shop",
         "url"
     )
+
+    autocomplete_fields = ["phone", "shop"]

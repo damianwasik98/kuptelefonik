@@ -2,14 +2,28 @@ from django.db import models
 from django.db.models import Min
 from django.db.models.functions import TruncDay
 from django.contrib.auth.models import User
-from decimal import Decimal
+
+
+class StorageUnit(models.Model):
+    name = models.CharField(max_length=5, default="GB")
+
+    def __str__(self):
+        return self.name
+
+
+class Color(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
 
 class Phone(models.Model):
 
     name = models.CharField(max_length=200)
     storage = models.IntegerField()
-    storage_unit = models.CharField(max_length=50)
-    color = models.CharField(max_length=100, blank=True)
+    storage_unit = models.ForeignKey(StorageUnit, on_delete=models.CASCADE)
+    color = models.ForeignKey(Color, on_delete=models.CASCADE)
     img = models.ImageField(upload_to=f'phones', blank=True)
 
     def __str__(self):
@@ -84,13 +98,23 @@ class Shop(models.Model):
     def __str__(self):
         return self.name
 
+class Currency(models.Model):
+    code = models.CharField(max_length=3, default="PLN") # currency in format https://en.wikipedia.org/wiki/ISO_4217
+    display_name = models.CharField(max_length=15, default="zł")
+    country = models.CharField(max_length=100, default="Polska")
+
+    def __str__(self):
+        return self.code
+
+
 class Offer(models.Model):
     
     date = models.DateTimeField() # phone price date
     price = models.DecimalField(max_digits=6, decimal_places=2)
-    currency = models.CharField(max_length=3, default="zł") # currency in format https://en.wikipedia.org/wiki/ISO_4217
+    currency = models.ForeignKey(Currency, on_delete=models.CASCADE)
     phone = models.ForeignKey(Phone, on_delete=models.CASCADE)
     shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+    url = models.URLField()
 
     def __str__(self):
         return f'{self.get_date_str()} {self.phone} {self.price}'
