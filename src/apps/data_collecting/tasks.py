@@ -5,7 +5,7 @@ from data_scraping.http.requests_client import RequestsHttpClient
 from data_scraping.html.web_gatherer import HtmlWebGatherer
 from data_scraping.scrapers.picker import ScraperPicker
 
-from apps.dashboard.models import Phone, Offer, Shop
+from apps.dashboard.models import Currency, Offer, Phone, Shop
 from apps.data_collecting.input_scrap_data_prepare import (
     serialize_input_data, 
     deserialize_input_data, 
@@ -43,9 +43,11 @@ def scraper(html: str, input_data: dict):
     input_data = deserialize_input_data(input_data)
     phone = Phone.objects.get(id=input_data.phone_id)
     shop = Shop.objects.get(id=input_data.shop_id)
+    currency = Currency.objects.get(code="PLN")
     offer = Offer(
         date=datetime.now(),
         price=price,
+        currency=currency,
         phone=phone,
         shop=shop,
         url=input_data.offer_url
