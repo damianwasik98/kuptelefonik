@@ -9,7 +9,7 @@ VIBOT.org, March 2008)
 
 Zawartość szablonu:
 
-- folder Rozdziały - folder zawierający kolejne rozdziały (najlepiej pisać każdy rozdział w osobnym pliku .tex)
+- folder chapters - folder zawierający kolejne rozdziały (najlepiej pisać każdy rozdział w osobnym pliku .tex)
 
 - folder figures - folder zawierający kolejne pliki (jeśli dołączamy liczne rysunki, dobrze utworzyć osobne foldery dla poszczególnych rozdziałów)
 
@@ -19,4 +19,4 @@ Zawartość szablonu:
 
 - thesis.tex - główny plik; zawiera ustawienia dokumentu, pozwala na ładowanie pakietów oraz dołączanie plików
 
-- Refs.bib: an example of bib file for building bibliography with bibtex.
+- refs.bib: an example of bib file for building bibliography with bibtex.
